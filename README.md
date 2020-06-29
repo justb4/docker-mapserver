@@ -34,7 +34,7 @@ This project aims to fulfill these needs:
 3. Extensible for instance for Python MapScript apps
 4. Quick build
 
-For aspect 3): may Docker images use Docker multi-stage builds. Somehow this does not play nice when extending the image with
+For aspect 3): many MapServer Docker images use Docker multi-stage builds. Somehow this does not play nice when extending the image with
 (MapScript) installs in a derived image like [segmentation faults](https://lists.osgeo.org/pipermail/mapserver-users/2020-June/081801.html). 
 
 ad 1) and 2) Many MapServer Docker images are bulky since based on Ubuntu and Apache. Using `-slim` versions of Debian 
