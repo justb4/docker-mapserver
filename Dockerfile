@@ -12,19 +12,23 @@ ARG MAPSERVER_VERSION="7.6.*"
 ARG EXTRA_DEB_PACKAGES=""
 ARG LIGHTTPD_VERSION=1.4.55-1
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV MS_DEBUGLEVEL 0
-ENV MS_ERRORFILE stderr
-ENV MAX_REQUESTS_PER_PROCESS 1000
-ENV LANG C.UTF-8
-ENV DEBUG 0
-ENV MIN_PROCS 1
-ENV MAX_PROCS 3
-ENV MAX_LOAD_PER_PROC 4
-ENV IDLE_TIMEOUT 20
+ENV DEBIAN_FRONTEND="noninteractive" \
+	MS_DEBUGLEVEL="0" \
+	MS_ERRORFILE="stderr" \
+	MAX_REQUESTS_PER_PROCESS="1000" \
+	LANG="C.UTF-8" \
+	DEBUG="0" \
+	MIN_PROCS="1" \
+	MAX_PROCS="3" \
+	MAX_LOAD_PER_PROC="4" \
+	IDLE_TIMEOUT="20"
 
 RUN apt-get -y update \
-    && apt-get install -y --no-install-recommends cgi-mapserver=${MAPSERVER_VERSION} lighttpd=${LIGHTTPD_VERSION} ${DEB_PACKAGES} lighttpd-mod-magnet=${LIGHTTPD_VERSION} \
+    && apt-get install -y --no-install-recommends \
+      cgi-mapserver=${MAPSERVER_VERSION} \
+      lighttpd=${LIGHTTPD_VERSION} \
+      lighttpd-mod-magnet=${LIGHTTPD_VERSION} \
+      ${DEB_PACKAGES} \
     && apt-get clean 
 
 COPY etc/lighttpd.conf /lighttpd.conf
