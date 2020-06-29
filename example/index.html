@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Adapted from: https://leafletjs.com/examples/wms/wms-example3.html -->
+    <!-- and https://github.com/ptv-logistics/Leaflet.NonTiledLayer -->
+    <title>MapServer Layers - Leaflet Example</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #map {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div id='map'></div>
+
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet.nontiledlayer@1.0.8/dist/NonTiledLayer.js"></script>
+<script type="text/javascript">
+
+    var map = L.map('map', {
+        center: [52.5, 5],
+        zoom: 7
+    });
+
+    var basemaps = {
+        Topography: L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+            layers: 'TOPO-WMS'
+        }),
+
+        Places: L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+            layers: 'OSM-Overlay-WMS'
+        }),
+
+        'Topography, then places': L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+            layers: 'TOPO-WMS,OSM-Overlay-WMS'
+        }),
+
+        'Places, then topography': L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+            layers: 'OSM-Overlay-WMS,TOPO-WMS'
+        })
+    };
+
+    var overlays = {
+        'Pubs': L.nonTiledLayer.wms('http://localhost:8081?', {
+            layers: 'points',
+            format: 'image/png',
+            transparent: true,
+            attribution: "OpenStreetMap"
+
+        }),
+        'PubsHeatmap': L.nonTiledLayer.wms('http://localhost:8081?', {
+            layers: 'points_heatmap',
+            format: 'image/png',
+            transparent: true,
+            attribution: "OpenStreetMap"
+
+        }),
+        'Polygons': L.tileLayer.wms('http://localhost:8081?', {
+            layers: 'polygons',
+            format: 'image/png',
+            transparent: true
+        })
+
+    };
+
+    L.control.layers(basemaps, overlays, {collapsed: false}).addTo(map);
+
+    basemaps.Topography.addTo(map);
+    overlays.PubsHeatmap.addTo(map);
+
+</script>
+
+
+</body>
+</html>
+

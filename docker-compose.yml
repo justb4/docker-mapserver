@@ -1,0 +1,26 @@
+version: "3"
+
+# Example docker-compose file, adapt for your setup
+services:
+
+  mapserver:
+
+    image: justb4/mapserver:latest
+    build: .
+
+    container_name: mapserver
+
+    environment:
+      - MS_MAPFILE=/srv/data/example.map
+      - MIN_PROCS=1
+      - MAX_PROCS=3
+      - MAX_LOAD_PER_PROC=4
+      - IDLE_TIMEOUT=20
+      - DEBUG=1
+      - MAPSERVER_CATCH_SEGV=1
+
+    ports:
+      - "8081:80"
+
+    volumes:
+      - ./example:/srv/data:rw
