@@ -50,6 +50,8 @@ existing Docker images, and not-too-good performance, I discovered that in the m
 heatmap generation, named [Kernel Density Estimation](https://mapserver.org/output/kerneldensity.html#table-of-contents) which 
 completely satisfies my purpose (heatmaps from GPS tracks). An example is included here: [example/index.html](example/index.html) to view.
 
+![Example with Heatmap](example/screenshot.png)
+
 ## What will it do
 
 It will create an MapServer application run with Lighttpd in which the map=... QUERY_STRING 'issue' is 'fixed'. 
