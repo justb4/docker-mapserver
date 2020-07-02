@@ -25,6 +25,9 @@ docker-compose up --build [-d]
 
 In browser open [example/index.html](example/index.html) to view layers (includes Heatmap).
 
+Or pull from DockerHub: https://hub.docker.com/repository/docker/justb4/mapserver
+Version tags follow the MapServer version, postfixed with the Docker Image version, e.g. `7.6.0-1`.
+
 ## Introduction
 
 This project aims to fulfill these needs:
