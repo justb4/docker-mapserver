@@ -28,8 +28,8 @@ RUN apt-get -y update \
       cgi-mapserver=${MAPSERVER_VERSION} \
       lighttpd=${LIGHTTPD_VERSION} \
       lighttpd-mod-magnet=${LIGHTTPD_VERSION} \
-      ${DEB_PACKAGES} \
-    && apt-get clean 
+      ${EXTRA_DEB_PACKAGES} \
+    && apt-get clean
 
 COPY etc/lighttpd.conf /lighttpd.conf
 
