@@ -1,4 +1,7 @@
-FROM debian:bullseye-slim
+FROM debian:buster-slim
+
+# FROM debian:bullseye-slim  BullsEye is moving target in versions and tiny unexpected issues
+
 # Very simple and slim MapServer Docker image.
 # Inspired by: https://hub.docker.com/r/camptocamp/mapserver/dockerfile
 # and: https://github.com/PDOK/mapserver-docker
@@ -7,12 +10,16 @@ LABEL maintainer="Just van den Broecke <just@justobjects.nl>"
 
 ARG TZ="Europe/Amsterdam"
 
-# MS 7.6.2-1 includes Proj 7.2.0-1 and GDAL 3.2.0
-ARG MAPSERVER_VERSION="7.6.*"
+# BullsEye MS 7.6.2-1 includes Proj 7.2.0-1 and GDAL 3.2.0  - maybe later
+# ARG MAPSERVER_VERSION="7.6.*"
+
+ARG MAPSERVER_VERSION="7.2.*"
+
 # May add extra Debian packages e.g. for mapScript support without needing to extend the Dockerfile
 # ARG EXTRA_DEB_PACKAGES="python3-mapscript python3-pyproj python3-gdal python3-pil python3-psycopg2 libcairo2 python3-cairo"
-ARG EXTRA_DEB_PACKAGES="curl"
-ARG LIGHTTPD_VERSION=1.4.56-1
+ARG EXTRA_DEB_PACKAGES=""
+ARG LIGHTTPD_VERSION=1.4.*
+# ARG LIGHTTPD_VERSION=1.4.56-1   Bullseye
 
 ENV DEBIAN_FRONTEND="noninteractive" \
 	MS_DEBUGLEVEL="0" \
