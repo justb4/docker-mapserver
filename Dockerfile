@@ -13,6 +13,7 @@ ARG TZ="Europe/Amsterdam"
 # BullsEye MS 7.6.2-1 includes Proj 7.2.0-1 and GDAL 3.2.0  - maybe later
 # ARG MAPSERVER_VERSION="7.6.*"
 
+# Buster MS 7.2.2-1 includes Proj 5.2.0-1 and GDAL 2.4.0
 ARG MAPSERVER_VERSION="7.2.*"
 
 # May add extra Debian packages e.g. for mapScript support without needing to extend the Dockerfile
@@ -30,7 +31,8 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 	MIN_PROCS="1" \
 	MAX_PROCS="3" \
 	MAX_LOAD_PER_PROC="4" \
-	IDLE_TIMEOUT="20"
+	IDLE_TIMEOUT="20" \
+	CURL_CA_BUNDLE="/mycacert.pem"
 
 RUN apt-get -y update \
     && apt-get install -y --no-install-recommends \
@@ -41,6 +43,7 @@ RUN apt-get -y update \
     && apt-get clean
 
 COPY etc/lighttpd.conf /lighttpd.conf
+COPY etc/cacert.pem /mycacert.pem
 
 EXPOSE 80
 
