@@ -18,7 +18,7 @@ ARG MAPSERVER_VERSION="7.2.*"
 
 # May add extra Debian packages e.g. for mapScript support without needing to extend the Dockerfile
 # ARG EXTRA_DEB_PACKAGES="python3-mapscript python3-pyproj python3-gdal python3-pil python3-psycopg2 libcairo2 python3-cairo"
-ARG EXTRA_DEB_PACKAGES=""
+ARG EXTRA_DEB_PACKAGES="curl"
 ARG LIGHTTPD_VERSION=1.4.*
 # ARG LIGHTTPD_VERSION=1.4.56-1   Bullseye
 
