@@ -10,7 +10,7 @@ Credits and inspiration for using Lighttp mainly from: <https://github.com/PDOK/
 
 ```docker
 docker build -t justb4/mapserver .
-docker run -e MAPSERVER_CONFIG_FILE=/opt/mapserver/mapserver.conf --rm -d -p 8001:80 --name mapserver-example -v `pwd`/example:/opt/mapserver justb4/mapserver
+docker run --rm -e MAPSERVER_CONFIG_FILE=/opt/mapserver/mapserver.conf --rm -d -p 8001:80 --name mapserver-example -v `pwd`/example:/opt/mapserver justb4/mapserver
 docker stop mapserver-example
 ```
 
@@ -92,7 +92,7 @@ needs to be mounted on the container directory /opt/mapserver. The mounted Volum
 The name of the mapfile will determine the URL path for the service.
 
 ```docker
-docker run -e MAPSERVER_CONFIG_FILE=/opt/mapserver/mapserver.conf -d -p 8081:80 --name mapserver-example -v `pwd`/example:/opt/mapserver justb4/mapserver
+docker run --rm -e MAPSERVER_CONFIG_FILE=/opt/mapserver/mapserver.conf -d -p 8081:80 --name mapserver-example -v $(pwd)/example:/opt/mapserver justb4/mapserver
 ```
 
 Running the example above will create a service on 
