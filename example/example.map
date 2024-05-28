@@ -1,11 +1,11 @@
 MAP
-  NAME          ""
-  CONFIG        "MS_ERRORFILE" "stderr"
+  NAME          "Example Map"
+  # SIZE          5000 5000
   EXTENT        2 50 9 54
+  CONFIG        "MS_ERRORFILE" "stderr"
   UNITS         meters
   STATUS        ON
-  SIZE          5000 5000
-  
+
   ## global debug settings for mapserver, remove comment in lines below to enable
   # DEBUG         4         # https://mapserver.org/optimization/debugging.html
   # CONFIG "CPL_DEBUG" "ON" # GDAL
@@ -47,7 +47,7 @@ MAP
       "ows_hoursofservice"               ""
       "ows_contactinstructions"          ""
       "ows_role"                         ""
-      "ows_srs"                          "EPSG:4326 EPSG:3857 EPSG:4258 EPSG:900913 CRS:84"
+      "ows_srs"                          "EPSG:4326 EPSG:3857 EPSG:4258 CRS:84"
       "ows_accessconstraints"            "otherRestrictions;http://creativecommons.org/publicdomain/mark/1.0"      
     END
   END
@@ -174,7 +174,7 @@ MAP
     METADATA
       "wfs_title"                    "polygons"
       "wfs_abstract"                 "Layer containing the polygons data"
-      "wfs_srs"                      "EPSG:4326 EPSG:3857 EPSG:4258 EPSG:900913 CRS:84"      
+      "wfs_srs"                      "EPSG:4326 EPSG:3857 EPSG:4258 CRS:84"
       "wfs_extent"                   "2 50 9 54"
       "wfs_bbox_extended"            "true"
       "wfs_enable_request"           "*"
@@ -190,7 +190,7 @@ MAP
       "wms_title"                    "polygons"
       "wms_extent"                   "2 50 9 54"    
       "wms_abstract"                 "Layer containing the polygons data"
-      "wms_srs"                      "EPSG:4326 EPSG:3857 EPSG:4258 EPSG:900913 CRS:84"
+      "wms_srs"                      "EPSG:4326 EPSG:3857 EPSG:4258 CRS:84"
       "wms_keywordlist"              "polygons,unknown"
       "wms_include_items"            "all"
     END
@@ -212,8 +212,8 @@ MAP
     CONNECTION "polygons.geojson"
     DATA "polygons"
     
-    DUMP TRUE
-    TEMPLATE /srv/data/polygons.html
+    # DUMP TRUE
+    TEMPLATE /opt/mapserver/polygons.html
 
   END # LAYER
 
@@ -227,7 +227,7 @@ MAP
     METADATA
       "wfs_title"                    "points"
       "wfs_abstract"                 "Layer containing the points data"
-      "wfs_srs"                      "EPSG:4326 EPSG:3857 EPSG:4258 EPSG:900913 CRS:84"      
+      "wfs_srs"                      "EPSG:4326 EPSG:3857 EPSG:4258 CRS:84"
       "wfs_extent"                   "2 50 9 54"
       "wfs_bbox_extended"            "true"
       "wfs_enable_request"           "*"
@@ -243,7 +243,7 @@ MAP
       "wms_title"                    "points"
       "wms_extent"                   "2 50 9 54"    
       "wms_abstract"                 "Layer containing the points data"
-      "wms_srs"                      "EPSG:4326 EPSG:3857 EPSG:4258 EPSG:900913 CRS:84"
+      "wms_srs"                      "EPSG:4326 EPSG:3857 EPSG:4258 CRS:84"
       "wms_keywordlist"              "points,unknown"
       "wms_include_items"            "all"
     END
@@ -267,8 +267,8 @@ MAP
     CONNECTION "points.geojson"
     DATA "points"
     
-    DUMP TRUE
-    TEMPLATE /srv/data/points.html
+    # DUMP TRUE
+    TEMPLATE /opt/mapserver/points.html
 
   END # LAYER
 

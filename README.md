@@ -4,22 +4,22 @@
 ![GitHub release](https://img.shields.io/github/release/justb4/docker-mapserver.svg)
 ![Docker Pulls](https://img.shields.io/docker/pulls/justb4/mapserver.svg)
 
-Credits and inspiration mainly from: <https://github.com/PDOK/mapserver-docker>
+Credits and inspiration for using Lighttp mainly from: <https://github.com/PDOK/mapserver-docker>
 
 ## TL;DR
 
 ```docker
 docker build -t justb4/mapserver .
-docker run -e MS_MAPFILE=/srv/data/example.map --rm -d -p 80:80 --name mapserver-example -v `pwd`/example:/srv/data justb4/mapserver
+docker run -e MAPSERVER_CONFIG_FILE=/opt/mapserver/mapserver.conf --rm -d -p 8001:80 --name mapserver-example -v `pwd`/example:/opt/mapserver justb4/mapserver
 docker stop mapserver-example
 ```
 
 
-Or more compact using `docker-compose` 
+Or more compact using `docker compose` 
 
 ```
 
-docker-compose up --build [-d]
+docker compose up --build [-d]
 
 ```
 
@@ -51,7 +51,7 @@ Main motivation for providing the N-th Docker Image for MapServer is the [MapGlo
 This project was from around 2011, using Python MapScript to generate heatmaps. Struggling with various
 existing Docker images, and not-too-good performance, I discovered that in the meantime MapServer offers
 heatmap generation, named [Kernel Density Estimation](https://mapserver.org/output/kerneldensity.html#table-of-contents) which 
-completely satisfies my purpose (heatmaps from GPS tracks). An example is included here: [example/index.html](example/index.html) to view.
+completely satisfies my purpose (heatmaps from GPS tracks). An example is included here: [example/index.html](example/index.html). Open in browser (no webserver needed)  to view.
 
 ![Example with Heatmap](example/screenshot.png)
 
@@ -62,7 +62,7 @@ This means that the MAP query parameter is removed from the QUERY_STRING.
 
 ## Docker image
 
-The Docker image is a single build, no multi-staging. Size uncompressed around 276MB.
+The Docker image is a single build, no multi-staging. Size uncompressed around 300MB.
 
 ## Usage
 
@@ -77,17 +77,26 @@ or
 
 ```
 
+### Configuration
+
+Gotcha! The MapServer configuration conventions have been considerably changed starting with 8.0.0. See the [docs](https://mapserver.org/mapfile/config.html).
+Where prior to v8 like in v7 a `MS_MAPFILE` pointing to a `.map` file was all that was needed, the 8.0.0 uses an enhanced scheme with 
+a global `.conf` file. The env var `MAPSERVER_CONFIG_FILE` should be used. 
+See the [example conf file](example/mapserver.conf) and [map file](example/example.map) here and the use of `MAPSERVER_CONFIG_FILE` in the
+[docker compose file](docker-compose.yml) and examples below.
+
 ### Run
 
 This image can be run straight from the commandline. A Docker Volume 
-needs to be mounted on the container directory /srv/data. The mounted Volume needs to contain at least one MapServer `*.map` file. 
+needs to be mounted on the container directory /opt/mapserver. The mounted Volume needs to contain at least one MapServer `*.map` file. 
 The name of the mapfile will determine the URL path for the service.
 
 ```docker
-docker run -e MS_MAPFILE=/srv/data/example.map -d -p 80:80 --name mapserver-example -v `pwd`/example:/srv/data justb4/mapserver
+docker run -e MAPSERVER_CONFIG_FILE=/opt/mapserver/mapserver.conf -d -p 8081:80 --name mapserver-example -v `pwd`/example:/opt/mapserver justb4/mapserver
 ```
 
-Running the example above will create a service on the url <http://localhost:8081/?request=getcapabilities&service=wms>
+Running the example above will create a service on 
+the url <http://localhost:8081/?request=getcapabilities&service=wms>
 
 The ENV variables that can be set are the following
 
@@ -97,12 +106,11 @@ MIN_PROCS
 MAX_PROCS
 MAX_LOAD_PER_PROC
 IDLE_TIMEOUT
-MS_MAPFILE
-
+MAPSERVER_CONFIG_FILE
 PROJ_LIB
 ```
 
-The ENV variables, with the exception of MS_MAPFILE have a default value set in the Dockerfile.
+The ENV variables, with the exception of MAPSERVER_CONFIG_FILE have default values set in the [Dockerfile](Dockerfile).
 
 ## Example
 
@@ -138,7 +146,7 @@ http://localhost:8081/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&BBOX=48.
 
 ### Why Lighttpd
 
-Lighthttpd runs as a single proces. Also all the routing configuration options aren't needed, 
+Lighttpd runs as a single proces. Also all the routing configuration options aren't needed, 
 because that is handled by the infrastructure/platform, like Kubernetes or Traefik. 
 If one would like to configure some simple routing is still can be done in the lighttpd.conf.
 
