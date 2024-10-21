@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 # Very simple and slim MapServer Docker image.
 # Inspired by:
@@ -9,7 +9,7 @@ LABEL maintainer="Just van den Broecke <just@justobjects.nl>"
 
 ARG TZ="Europe/Amsterdam"
 
-# Somehow does not work, default version in Bookworm is v8.0.0+
+# Somehow does not work, default version in Bookworm is v8.0.0+ and in Trixie 8.2.2+
 # ARG MAPSERVER_VERSION="7.2.*"
 
 # May add extra Debian packages e.g. for mapScript support without needing to extend the Dockerfile

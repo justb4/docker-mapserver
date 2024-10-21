@@ -3,7 +3,7 @@ services:
 
   mapserver:
 
-    image: justb4/mapserver:latest
+    image: justb4/mapserver:8.2.2-1
     build: .
 
     container_name: mapserver
